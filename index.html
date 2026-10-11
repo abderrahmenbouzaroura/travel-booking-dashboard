@@ -33,14 +33,31 @@
            
         </section>
         <aside class="summary-panel" id="itinerary-summary">
-            <h2>Active Itinerary Summary</h2>
-            <ul>
-                <li>Subtotal: <span id="summary-subtotal">$0.00</span></li>
-                <li>Taxes & Fees: <span id="summary-tax">$0.00</span></li>
-                <li>Total: <span id="summary-total">$0.00</span></li>
-            </ul>
-            <button id="confirm-booking-btn">Confirm Booking</button>
-        </aside>
+    <h2>Active Itinerary Summary</h2>
+    
+    <!-- القائمة التي سنعرض فيها عناصر الرحلات المختارة -->
+    <ul class="selected-trips-list" id="selected-trips-list">
+        <!-- ستتم إضافتها تلقائياً بواسطة JavaScript -->
+    </ul>
+
+    <!-- قسم الحسابات والأسعار -->
+    <div class="summary-totals">
+        <div class="total-row">
+            <span>Subtotal:</span>
+            <span class="price-value" id="summary-subtotal">$0.00</span>
+        </div>
+        <div class="total-row">
+            <span>Taxes & Fees (10%):</span>
+            <span class="fee-value" id="summary-tax">$0.00</span>
+        </div>
+        <div class="total-row total-highlight">
+            <span>Total:</span>
+            <span class="price-value highlight" id="summary-total">$0.00</span>
+        </div>
+    </div>
+
+    <button id="confirm-booking-btn" class="confirm-btn">Confirm Booking</button>
+</aside>
         </div>
     </main>
     <script src="src/js/app.js"></script>

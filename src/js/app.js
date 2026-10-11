@@ -1,3 +1,4 @@
+// مصفوفة البيانات الأساسية
 const trips = [
     {
         id: 1,
@@ -25,32 +26,72 @@ const trips = [
     }
 ];
 
-// لفحص البيانات في المتصفح
-console.log("Trips Data Loaded:", trips);
-// 1. استهداف حاوية الرحلات
+// عناصر الـ DOM
 const tripListContainer = document.getElementById("trip-list");
+const selectedTripsList = document.getElementById("selected-trips-list");
+const subtotalEl = document.getElementById("summary-subtotal");
+const taxEl = document.getElementById("summary-tax");
+const totalEl = document.getElementById("summary-total");
+const bookingCountEl = document.getElementById("total-trips-count");
 
-// 2. دالة عرض الرحلات في الصفحة
+// الحالة (State)
+let bookedTrips = [];
+
+// عرض البطاقات ديناميكياً
 function renderTrips(tripsData) {
-    // تصفير المحتوى السابق للحاوية
     tripListContainer.innerHTML = "";
-
-    // المرور على كل رحلة وإنشاء كرت خاص بها
     tripsData.forEach((trip) => {
         const cardHTML = `
             <article class="travel-card">
-                <img src="${trip.imageUrl}" alt="${trip.title}" style="width: 100%; height: 160px; object-fit: cover; border-radius: 8px;">
+                <img src="${trip.imageUrl}" alt="${trip.title}">
                 <h3>${trip.title}</h3>
-                <span style="color: #34d399; font-weight: bold;">$${trip.price} / seat</span>
-                <p style="color: #94a3b8; font-size: 13px;">${trip.duration} · ${trip.description}</p>
+                <span class="price">$${trip.price} / seat</span>
+                <p class="details">${trip.duration} · ${trip.description}</p>
                 <button class="book-btn" data-id="${trip.id}">Book Now</button>
             </article>
         `;
-
-        // إضافة البطاقة للحاوية
         tripListContainer.innerHTML += cardHTML;
     });
 }
 
-// 3. استدعاء الدالة لتشغيل العرض فور تحميل الصفحة
+// استماع للأحداث (Event Delegation)
+tripListContainer.addEventListener("click", (event) => {
+    if (event.target.classList.contains("book-btn")) {
+        const tripId = parseInt(event.target.dataset.id);
+        const selectedTrip = trips.find((t) => t.id === tripId);
+
+        if (selectedTrip) {
+            bookedTrips.push(selectedTrip);
+            updateSummaryUI();
+        }
+    }
+});
+
+// تحديث لوحة الملخص
+function updateSummaryUI() {
+    selectedTripsList.innerHTML = "";
+    bookedTrips.forEach((trip) => {
+        const itemHTML = `
+            <li class="selected-trip-item">
+                <span>${trip.title}</span>
+                <span class="price-value">$${trip.price}</span>
+            </li>
+        `;
+        selectedTripsList.innerHTML += itemHTML;
+    });
+
+    const subtotal = bookedTrips.reduce((sum, item) => sum + item.price, 0);
+    const tax = subtotal * 0.10;
+    const total = subtotal + tax;
+
+    subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+    taxEl.textContent = `$${tax.toFixed(2)}`;
+    totalEl.textContent = `$${total.toFixed(2)}`;
+
+    if (bookingCountEl) {
+        bookingCountEl.textContent = `${bookedTrips.length} Trips`;
+    }
+}
+
+// التشغيل الأولي
 renderTrips(trips);
