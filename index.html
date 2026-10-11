@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="src/css/style.css">
     <title>Travel Booking</title>
 </head>
 <body>
-    <aside>
+    <aside class="sidebar">
         <h2>Travel Booking</h2>
         <nav>
             <ul>
@@ -25,6 +26,7 @@
             <h1>Trip Exploration & Booking</h1>
             <input type="search" name="" id="">
         </header>
+        <div class="content-layout">
         <section id="trip-list">
             <article class="travel-card">
                 <img src="" alt="">
@@ -48,7 +50,7 @@
                 <button>Book Now</button>
             </article>
         </section>
-        <aside id="itinerary-summary">
+        <aside class="summary-panel" id="itinerary-summary">
             <h2>Active Itinerary Summary</h2>
             <ul>
                 <li>Subtotal: <span id="summary-subtotal">$0.00</span></li>
@@ -57,6 +59,7 @@
             </ul>
             <button id="confirm-booking-btn">Confirm Booking</button>
         </aside>
+        </div>
     </main>
 </body>
 </html>
