@@ -174,3 +174,39 @@ selectedTripsList.addEventListener("click", (e) => {
 
 // تشغيل التحديث أول مرة لإظهار رسالة الحالة الفارغة
 updateSummaryUI();
+// استهداف عناصر النافذة المنبثقة
+const bookingModal = document.getElementById("booking-modal");
+const confirmBookingBtn = document.getElementById("confirm-booking-btn");
+const closeModalBtn = document.getElementById("close-modal-btn");
+const modalBookingId = document.getElementById("modal-booking-id");
+const modalTotalPaid = document.getElementById("modal-total-paid");
+
+// 1. فتح النافذة عند الضغط على تأكيد الحجز
+confirmBookingBtn.addEventListener("click", () => {
+    if (bookedTrips.length === 0) return;
+
+    // حساب المبلغ الإجمالي النهائي
+    const subtotal = bookedTrips.reduce((sum, item) => sum + item.price, 0);
+    const total = subtotal + (subtotal * 0.10);
+
+    // توليد رقم حجز عشوائي (مثل: #TV-4829)
+    const randomId = Math.floor(1000 + Math.random() * 9000);
+    modalBookingId.textContent = `#TV-${randomId}`;
+    modalTotalPaid.textContent = `$${total.toFixed(2)}`;
+
+    // إظهار النافذة عبر إزالة صنف hidden
+    bookingModal.classList.remove("hidden");
+});
+
+// 2. إغلاق النافذة وتصفير السلة
+closeModalBtn.addEventListener("click", () => {
+    // إخفاء النافذة
+    bookingModal.classList.add("hidden");
+
+    // تفريغ البيانات من الذاكرة والـ localStorage
+    bookedTrips = [];
+    localStorage.removeItem("savedBookings");
+
+    // تحديث الواجهة لتظهر السلة فارغة
+    updateSummaryUI();
+});
