@@ -111,3 +111,65 @@ searchInput.addEventListener("input", (e) => {
     // إعادة عرض البطاقات المفلترة فقط
     renderTrips(filteredTrips);
 });
+// 1. تحديث دالة عرض الملخص مع معالجة الحالة الفارغة وزر الحذف
+function updateSummaryUI() {
+    selectedTripsList.innerHTML = "";
+
+    const confirmBtn = document.getElementById("confirm-booking-btn");
+
+    // فحص إذا كانت السلة فارغة
+    if (bookedTrips.length === 0) {
+        selectedTripsList.innerHTML = `<li class="empty-state-text">No destinations selected yet.</li>`;
+        subtotalEl.textContent = "$0.00";
+        taxEl.textContent = "$0.00";
+        totalEl.textContent = "$0.00";
+        if (bookingCountEl) bookingCountEl.textContent = "0 Trips";
+        if (confirmBtn) confirmBtn.disabled = true;
+        return; // التوقف هنا لأن السلة فارغة
+    }
+
+    if (confirmBtn) confirmBtn.disabled = false;
+
+    // رسم عناصر الرحلات مع زر الحذف
+    bookedTrips.forEach((trip, index) => {
+        const itemHTML = `
+            <li class="selected-trip-item">
+                <span>${trip.title}</span>
+                <div style="display: flex; align-items: center;">
+                    <span class="price-value">$${trip.price}</span>
+                    <button class="remove-btn" data-index="${index}" title="Remove trip">✕</button>
+                </div>
+            </li>
+        `;
+        selectedTripsList.innerHTML += itemHTML;
+    });
+
+    // العمليات الحسابية
+    const subtotal = bookedTrips.reduce((sum, item) => sum + item.price, 0);
+    const tax = subtotal * 0.10;
+    const total = subtotal + tax;
+
+    subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+    taxEl.textContent = `$${tax.toFixed(2)}`;
+    totalEl.textContent = `$${total.toFixed(2)}`;
+
+    if (bookingCountEl) {
+        bookingCountEl.textContent = `${bookedTrips.length} Trips`;
+    }
+}
+
+// 2. الاستماع لحدث حذف رحلة من لوحة الملخص
+selectedTripsList.addEventListener("click", (e) => {
+    if (e.target.classList.contains("remove-btn")) {
+        const itemIndex = parseInt(e.target.dataset.index);
+        
+        // حذف العنصر المحدد من المصفوفة
+        bookedTrips.splice(itemIndex, 1);
+        
+        // إعادة تحديث الواجهة والحسابات
+        updateSummaryUI();
+    }
+});
+
+// تشغيل التحديث أول مرة لإظهار رسالة الحالة الفارغة
+updateSummaryUI();

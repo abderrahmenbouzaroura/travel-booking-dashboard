@@ -177,3 +177,37 @@ button:hover {
     width: 100%;
     margin-top: 16px;
 }
+/* زر الحذف داخل عنصر الحجز */
+.remove-btn {
+    background: transparent;
+    border: none;
+    color: #ef4444;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 4px;
+    margin-left: 8px;
+    border-radius: 4px;
+    line-height: 1;
+}
+
+.remove-btn:hover {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+}
+
+/* رسالة القائمة الفارغة */
+.empty-state-text {
+    color: #64748b;
+    font-size: 13px;
+    text-align: center;
+    padding: 16px 0;
+    font-style: italic;
+}
+
+/* تعطيل زر التأكيد عند فراغ السلة */
+.confirm-btn:disabled {
+    background-color: #334155;
+    color: #64748b;
+    cursor: not-allowed;
+}
