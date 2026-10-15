@@ -35,7 +35,7 @@ const totalEl = document.getElementById("summary-total");
 const bookingCountEl = document.getElementById("total-trips-count");
 
 // الحالة (State)
-let bookedTrips = [];
+let bookedTrips = JSON.parse(localStorage.getItem("savedBookings")) || [];
 
 // عرض البطاقات ديناميكياً
 function renderTrips(tripsData) {
@@ -113,6 +113,7 @@ searchInput.addEventListener("input", (e) => {
 });
 // 1. تحديث دالة عرض الملخص مع معالجة الحالة الفارغة وزر الحذف
 function updateSummaryUI() {
+    localStorage.setItem("savedBookings", JSON.stringify(bookedTrips));
     selectedTripsList.innerHTML = "";
 
     const confirmBtn = document.getElementById("confirm-booking-btn");
