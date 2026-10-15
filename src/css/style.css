@@ -285,3 +285,47 @@ button:hover {
 .modal-btn {
     width: 100%;
 }
+/* ===================================================
+   Responsive Breakpoint: الشاشات المتوسطة والصغيرة
+   =================================================== */
+@media (max-width: 900px) {
+    /* 1. جعل الصفحة تترتب عمودياً */
+    body {
+        flex-direction: column;
+    }
+
+    /* 2. تحويل الشريط الجانبي إلى شريط علوي كامل العرض */
+    .sidebar {
+        width: 100%;
+        padding: 16px;
+        gap: 16px;
+    }
+
+    .sidebar ul {
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-top: 12px;
+        gap: 8px;
+    }
+
+    /* 3. جعل المحتوى ولوحة الملخص في عمود واحد */
+    .content-layout {
+        grid-template-columns: 1fr;
+    }
+
+    /* 4. جعل بطاقات الرحلات تتراص كعمود واحد مريح للقراءة */
+    #trip-list {
+        grid-template-columns: 1fr;
+    }
+
+    /* 5. ترتيب شريط البحث ليتناسب مع عرض الهاتف */
+    header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    header input[type="search"] {
+        width: 100%;
+    }
+}
