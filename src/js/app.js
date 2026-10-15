@@ -95,3 +95,19 @@ function updateSummaryUI() {
 
 // التشغيل الأولي
 renderTrips(trips);
+// 1. استهداف حقل البحث
+const searchInput = document.getElementById("search-input");
+
+// 2. الاستماع لحدث الكتابة اللحظي
+searchInput.addEventListener("input", (e) => {
+    const searchTerm = e.target.value.toLowerCase().trim();
+
+    // تصفية مصفوفة الرحلات الأصلية
+    const filteredTrips = trips.filter((trip) => {
+        return trip.title.toLowerCase().includes(searchTerm) || 
+               trip.description.toLowerCase().includes(searchTerm);
+    });
+
+    // إعادة عرض البطاقات المفلترة فقط
+    renderTrips(filteredTrips);
+});

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="src/css/style.css">
+    <link rel="icon" type="image/x-icon" href="src/favicon.ico">
     <title>Travel Booking</title>
 </head>
 <body>
@@ -24,40 +25,37 @@
         </div>
     </aside>
     <main>
-       <header>
+        <header>
             <h1>Trip Exploration & Booking</h1>
-            <input type="search" name="" id="">
+            <input type="search" name="" id="search-input" placeholder="Search for trips...">
         </header>
         <div class="content-layout">
-        <section id="trip-list">
-           
-        </section>
-        <aside class="summary-panel" id="itinerary-summary">
-    <h2>Active Itinerary Summary</h2>
+            <section id="trip-list"></section>
+            <aside class="summary-panel" id="itinerary-summary">
+                <h2>Active Itinerary Summary</h2>
     
-    <!-- القائمة التي سنعرض فيها عناصر الرحلات المختارة -->
-    <ul class="selected-trips-list" id="selected-trips-list">
-        <!-- ستتم إضافتها تلقائياً بواسطة JavaScript -->
-    </ul>
+                <!-- القائمة التي سنعرض فيها عناصر الرحلات المختارة -->
+                <ul class="selected-trips-list" id="selected-trips-list">
+                <!-- ستتم إضافتها تلقائياً بواسطة JavaScript -->
+                </ul>
 
-    <!-- قسم الحسابات والأسعار -->
-    <div class="summary-totals">
-        <div class="total-row">
-            <span>Subtotal:</span>
-            <span class="price-value" id="summary-subtotal">$0.00</span>
-        </div>
-        <div class="total-row">
-            <span>Taxes & Fees (10%):</span>
-            <span class="fee-value" id="summary-tax">$0.00</span>
-        </div>
-        <div class="total-row total-highlight">
-            <span>Total:</span>
-            <span class="price-value highlight" id="summary-total">$0.00</span>
-        </div>
-    </div>
-
-    <button id="confirm-booking-btn" class="confirm-btn">Confirm Booking</button>
-</aside>
+                <!-- قسم الحسابات والأسعار -->
+                <div class="summary-totals">
+                    <div class="total-row">
+                        <span>Subtotal:</span>
+                        <span class="price-value" id="summary-subtotal">$0.00</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Taxes & Fees (10%):</span>
+                        <span class="fee-value" id="summary-tax">$0.00</span>
+                    </div>
+                    <div class="total-row total-highlight">
+                        <span>Total:</span>
+                        <span class="price-value highlight" id="summary-total">$0.00</span>
+                    </div>
+                </div>
+                <button id="confirm-booking-btn" class="confirm-btn">Confirm Booking</button>
+            </aside>
         </div>
     </main>
     <script src="src/js/app.js"></script>
