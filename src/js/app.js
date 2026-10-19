@@ -210,3 +210,41 @@ closeModalBtn.addEventListener("click", () => {
     // تحديث الواجهة لتظهر السلة فارغة
     updateSummaryUI();
 });
+// ===================================================
+// محرك التنقل وتطبيق الصفحة الواحدة (SPA Engine)
+// ===================================================
+
+const navLinks = document.querySelectorAll(".nav-link");
+const viewSections = document.querySelectorAll(".view-section");
+const pageTitle = document.querySelector("header h1");
+const searchBar = document.getElementById("search-input");
+
+navLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        // 1. تحديث شكل الرابط النشط في الشريط الجانبي
+        navLinks.forEach((l) => l.classList.remove("active"));
+        link.classList.add("active");
+
+        // 2. إخفاء جميع الشاشات
+        viewSections.forEach((section) => section.classList.add("hidden"));
+
+        // 3. قراءة الشاشة المستهدفة وإظهارها
+        const targetView = link.dataset.view;
+
+        if (targetView === "explore") {
+            document.getElementById("explore-view").classList.remove("hidden");
+            pageTitle.textContent = "Trip Exploration & Booking";
+            searchBar.style.display = "block"; // إظهار شريط البحث
+        } else if (targetView === "bookings") {
+            document.getElementById("my-bookings-view").classList.remove("hidden");
+            pageTitle.textContent = "My Bookings History";
+            searchBar.style.display = "none"; // إخفاء البحث في صفحة السجل
+        } else if (targetView === "analytics") {
+            document.getElementById("analytics-view").classList.remove("hidden");
+            pageTitle.textContent = "Travel & Spending Analytics";
+            searchBar.style.display = "none"; // إخفاء البحث في صفحة الإحصائيات
+        }
+    });
+});
