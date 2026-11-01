@@ -532,3 +532,67 @@ header input[type="search"]:focus {
     width: 100%;
   }
 }
+/* ===================================================
+   Phase 4: Micro-animations & Interaction Polish
+   =================================================== */
+
+/* 1. حركة ظهور البطاقات وصعودها التدريجي */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.travel-card {
+  animation: fadeInUp 0.3s ease-out forwards;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* تأثير طفو خفيف عند تمرير الماوس فوق البطاقة */
+.travel-card:hover {
+  transform: translateY(-4px);
+  border-color: #475569;
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* 2. رد فعل النقر الحركي على كافة الأزرار */
+button:active {
+  transform: scale(0.96);
+}
+
+/* 3. حركة انسيابية لدخول العناصر في قائمة السلة */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.selected-trip-item {
+  animation: slideInRight 0.2s ease-out forwards;
+}
+
+/* 4. حركة ظهور وتكبير ناعمة للنافذة المنبثقة */
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-card {
+  animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
