@@ -1,35 +1,32 @@
-# 🌍 TerraVoyage — Travel Itinerary & Booking Dashboard
+# 🌍 TerraVoyage v2.0.0 — SPA Travel Booking & Analytics Platform
 
-A responsive, client-side travel booking and itinerary planning dashboard built with pure Vanilla JavaScript, CSS Grid/Flexbox, and Semantic HTML5. Designed to simulate a modern booking platform with real-time computations and local persistence.
+An enterprise-grade, client-side Single Page Application (SPA) travel dashboard built with pure Vanilla JavaScript (ES6+), modern CSS Grid/Flexbox, and Semantic HTML5. Evolved from an MVP into an interactive application featuring multi-view client routing, real-time analytics, responsive drawer navigation, and local state persistence.
 
 ## 🚀 Live Demo
 [View Live Application](https://abderrahmenbouzaroura.github.io/travel-booking-dashboard/)
 
 ---
 
-## ✨ Key Features
-- **Semantic & Accessible Layout:** Clean HTML5 structure (`main`, `aside`, `header`, `article`) styled with custom CSS.
-- **Dynamic DOM Generation:** Trip cards and catalog items are rendered dynamically from structured JavaScript data objects.
-- **Real-Time Search & Filtering:** Instant client-side filtering by trip title and description on keystroke.
-- **Interactive Itinerary & Pricing Engine:**
-  - Dynamic item addition and deletion (`splice`).
-  - Automated calculation of subtotal, 10% taxes, and grand total.
-  - Active booking counter synchronization across UI components.
-- **Local State Persistence:** Uses the browser's `localStorage` to preserve selected trips across page refreshes.
-- **Complete Booking Workflow:** Confirmation modal with randomized reservation reference (`#TV-XXXX`) and clean state resets.
-- **Mobile-First Responsive Design:** Fully responsive layout adapting from multi-column grid dashboards to single-column mobile views.
+## ✨ What's New in v2.0.0
+- **SPA View Routing Engine:** Seamless client-side transitions between `Explore Trips`, `My Bookings History`, and `Analytics` views without full page reloads.
+- **Analytics & Spending Tracker:** Real-time metrics computing total expeditions completed and aggregate financial expenditures using JavaScript aggregation methods.
+- **Persistent Booking Archive:** Confirmed reservations automatically generate unique IDs (`#TV-XXXX`) and save permanently into browser `localStorage`.
+- **Responsive Mobile Drawer:** Smooth slide-in navigation panel with backdrop blur overlay and automatic touch dismissal.
+- **Micro-animations & Visual Polish:** Keyframe-driven entry animations (`fadeInUp`, `modalPop`), tactile button click feedback (`scale`), and elevated hover states.
+- **Strict CSS Separation:** 100% decoupling of styling rules from markup (zero inline styles).
 
 ---
 
-## 🛠️ Tech Stack
-- **HTML5:** Semantic architecture, accessible forms, and landmark roles.
-- **CSS3:** Custom properties (variables), Flexbox, CSS Grid layouts, and Media Queries.
-- **JavaScript (ES6+):** Array methods (`filter`, `reduce`, `find`), DOM manipulation, Event Delegation, and `localStorage` API.
-- **Git & GitHub:** Version control with conventional commit messages and GitHub Pages deployment.
+## 🛠️ Architecture & Tech Stack
+- **Architecture:** Single Page Application (SPA) driven by dynamic view switching and data-driven DOM rendering.
+- **HTML5:** Semantic landmark architecture (`main`, `aside`, `header`, `article`).
+- **CSS3:** Custom UI design system, CSS Grid layouts, Flexbox alignment, Keyframe animations, and Media Queries.
+- **JavaScript (ES6+):** Pure Vanilla JS leveraging modern Array APIs (`filter`, `reduce`, `find`, `splice`), Event Delegation, State Management, and the Web Storage API.
+- **DevOps & Version Control:** Conventional Commits workflow and continuous deployment via GitHub Pages.
 
 ---
 
-## 💻 Local Setup & Getting Started
+## 💻 Local Setup & Execution
 
 1. Clone the repository:
    ```bash
