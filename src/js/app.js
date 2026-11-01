@@ -49,24 +49,24 @@ const modalTotalPaid = document.getElementById("modal-total-paid");
 // عناصر محرك الـ SPA
 const navLinks = document.querySelectorAll(".nav-link");
 const viewSections = document.querySelectorAll(".view-section");
-const pageTitle = document.querySelector("header h1");
+const pageTitle = document.getElementById("page-title");
 const searchBar = document.getElementById("search-input");
+
+// عناصر القائمة المنزلقة للشاشات الصغيرة
+const menuToggleBtn = document.getElementById("menu-toggle-btn");
+const sidebar = document.querySelector(".sidebar");
+const sidebarOverlay = document.getElementById("sidebar-overlay");
 
 // ===================================================
 // 3. الحالة البرمجية (State Management)
 // ===================================================
-// مصفوفة الحجوزات النشطة الحالية (السلة)
 let bookedTrips = JSON.parse(localStorage.getItem("savedBookings")) || [];
-
-// مصفوفة الحجوزات المؤكدة تاريخياً
 let confirmedBookings =
   JSON.parse(localStorage.getItem("confirmedBookingsHistory")) || [];
 
 // ===================================================
 // 4. دوال رسم وتحديث الواجهة (Render Functions)
 // ===================================================
-
-// عرض بطاقات الرحلات في الكتالوج
 function renderTrips(tripsData) {
   tripListContainer.innerHTML = "";
   tripsData.forEach((trip) => {
@@ -83,12 +83,10 @@ function renderTrips(tripsData) {
   });
 }
 
-// تحديث لوحة الملخص وحساب المجموع اللحظي
 function updateSummaryUI() {
   localStorage.setItem("savedBookings", JSON.stringify(bookedTrips));
   selectedTripsList.innerHTML = "";
 
-  // فحص الحالة الفارغة
   if (bookedTrips.length === 0) {
     selectedTripsList.innerHTML = `<li class="empty-state-text">No destinations selected yet.</li>`;
     subtotalEl.textContent = "$0.00";
@@ -101,12 +99,11 @@ function updateSummaryUI() {
 
   if (confirmBookingBtn) confirmBookingBtn.disabled = false;
 
-  // رسم عناصر الرحلات المختارة مع زر الحذف
   bookedTrips.forEach((trip, index) => {
     const itemHTML = `
       <li class="selected-trip-item">
           <span>${trip.title}</span>
-          <div style="display: flex; align-items: center;">
+          <div class="selected-trip-action-group">
               <span class="price-value">$${trip.price}</span>
               <button class="remove-btn" data-index="${index}" title="Remove trip">✕</button>
           </div>
@@ -115,7 +112,6 @@ function updateSummaryUI() {
     selectedTripsList.innerHTML += itemHTML;
   });
 
-  // العمليات الحسابية
   const subtotal = bookedTrips.reduce((sum, item) => sum + item.price, 0);
   const tax = subtotal * 0.1;
   const total = subtotal + tax;
@@ -129,45 +125,54 @@ function updateSummaryUI() {
   }
 }
 
-// تحديث شاشة My Bookings وشاشة Analytics
 function updateHistoryAndAnalyticsUI() {
   const historyContainer = document.getElementById("confirmed-bookings-container");
   const analyticsCountEl = document.getElementById("analytics-trips-count");
   const analyticsSpentEl = document.getElementById("analytics-total-spent");
 
-  // تحديث سجل الحجوزات
   if (confirmedBookings.length === 0) {
     historyContainer.innerHTML = `<p class="empty-state-text">No confirmed bookings yet. Complete a reservation from Explore Trips.</p>`;
   } else {
     historyContainer.innerHTML = "";
     confirmedBookings.forEach((booking) => {
       const bookingCard = `
-        <div style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+        <div class="booking-history-item">
             <div>
-                <span style="color: #34d399; font-weight: bold; font-size: 13px;">${booking.id}</span>
-                <h4 style="margin: 4px 0; font-size: 15px;">${booking.trips.map((t) => t.title).join(" + ")}</h4>
-                <p style="color: #94a3b8; font-size: 12px;">Date: ${booking.date}</p>
+                <span class="booking-meta-id">${booking.id}</span>
+                <h4 class="booking-meta-title">${booking.trips.map((t) => t.title).join(" + ")}</h4>
+                <p class="booking-meta-date">Date: ${booking.date}</p>
             </div>
-            <span style="font-size: 16px; font-weight: bold; color: #f8fafc;">$${booking.totalPaid.toFixed(2)}</span>
+            <span class="booking-item-total">$${booking.totalPaid.toFixed(2)}</span>
         </div>
       `;
       historyContainer.innerHTML += bookingCard;
     });
   }
 
-  // تحديث الإحصائيات
   const totalTripsCount = confirmedBookings.reduce((sum, b) => sum + b.trips.length, 0);
   const totalSpent = confirmedBookings.reduce((sum, b) => sum + b.totalPaid, 0);
 
   if (analyticsCountEl) analyticsCountEl.textContent = totalTripsCount;
-  if (analyticsSpentEl) analyticsSpentEl.textContent = `$${totalSpent.toFixed(2)}`;
+  if (analyticsSpentEl)
+    analyticsSpentEl.textContent = `$${totalSpent.toFixed(2)}`;
 }
 
 // ===================================================
-// 5. الاستماع للأحداث (Event Listeners)
+// 5. إدارة قائمة الهاتف (Mobile Drawer Helpers)
 // ===================================================
+function openMobileDrawer() {
+  sidebar.classList.add("drawer-open");
+  sidebarOverlay.classList.remove("hidden");
+}
 
-// إضافة رحلة للسلة (Event Delegation)
+function closeMobileDrawer() {
+  sidebar.classList.remove("drawer-open");
+  sidebarOverlay.classList.add("hidden");
+}
+
+// ===================================================
+// 6. الاستماع للأحداث (Event Listeners)
+// ===================================================
 tripListContainer.addEventListener("click", (event) => {
   if (event.target.classList.contains("book-btn")) {
     const tripId = parseInt(event.target.dataset.id);
@@ -180,7 +185,6 @@ tripListContainer.addEventListener("click", (event) => {
   }
 });
 
-// حذف رحلة من السلة
 selectedTripsList.addEventListener("click", (e) => {
   if (e.target.classList.contains("remove-btn")) {
     const itemIndex = parseInt(e.target.dataset.index);
@@ -189,7 +193,6 @@ selectedTripsList.addEventListener("click", (e) => {
   }
 });
 
-// البحث والفلترة اللحظية
 searchInput.addEventListener("input", (e) => {
   const searchTerm = e.target.value.toLowerCase().trim();
   const filteredTrips = trips.filter((trip) => {
@@ -201,7 +204,6 @@ searchInput.addEventListener("input", (e) => {
   renderTrips(filteredTrips);
 });
 
-// فتح نافذة تأكيد الحجز
 confirmBookingBtn.addEventListener("click", () => {
   if (bookedTrips.length === 0) return;
 
@@ -214,7 +216,6 @@ confirmBookingBtn.addEventListener("click", () => {
   bookingModal.classList.remove("hidden");
 });
 
-// إغلاق النافذة وتأكيد حفظ الحجز في السجل الدائم
 closeModalBtn.addEventListener("click", () => {
   bookingModal.classList.add("hidden");
 
@@ -246,7 +247,6 @@ closeModalBtn.addEventListener("click", () => {
   }
 });
 
-// محرك التنقل وتطبيق الصفحة الواحدة (SPA Engine)
 navLinks.forEach((link) => {
   link.addEventListener("click", (e) => {
     e.preventDefault();
@@ -271,11 +271,29 @@ navLinks.forEach((link) => {
       pageTitle.textContent = "Travel & Spending Analytics";
       searchBar.style.display = "none";
     }
+
+    if (window.innerWidth <= 900) {
+      closeMobileDrawer();
+    }
   });
 });
 
+if (menuToggleBtn) {
+  menuToggleBtn.addEventListener("click", () => {
+    if (sidebar.classList.contains("drawer-open")) {
+      closeMobileDrawer();
+    } else {
+      openMobileDrawer();
+    }
+  });
+}
+
+if (sidebarOverlay) {
+  sidebarOverlay.addEventListener("click", closeMobileDrawer);
+}
+
 // ===================================================
-// 6. التشغيل الأولي عند تحميل الصفحة (Initialization)
+// 7. التشغيل الأولي (Initialization)
 // ===================================================
 renderTrips(trips);
 updateSummaryUI();

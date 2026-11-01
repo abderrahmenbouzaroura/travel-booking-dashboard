@@ -8,15 +8,14 @@
     <title>Travel Booking</title>
   </head>
   <body>
+    <!-- الشريط الجانبي -->
     <aside class="sidebar">
       <div class="sidebar-header">
         <h2>Travel Booking</h2>
         <nav>
           <ul>
             <li>
-              <a href="#" class="nav-link active" data-view="explore"
-                >Explore Trip</a
-              >
+              <a href="#" class="nav-link active" data-view="explore">Explore Trip</a>
             </li>
             <li>
               <a href="#" class="nav-link" data-view="bookings">My Bookings</a>
@@ -32,9 +31,16 @@
         <span id="total-trips-count">0 Trips</span>
       </div>
     </aside>
+
+    <!-- طبقة التعتيم لشاشات الهواتف -->
+    <div id="sidebar-overlay" class="sidebar-overlay hidden"></div>
+
     <main>
       <header>
-        <h1>Trip Exploration & Booking</h1>
+        <div class="header-brand">
+          <button id="menu-toggle-btn" class="menu-toggle-btn" aria-label="Open Navigation Menu">☰</button>
+          <h1 id="page-title">Trip Exploration & Booking</h1>
+        </div>
         <input
           type="search"
           name=""
@@ -42,17 +48,15 @@
           placeholder="Search for trips..."
         />
       </header>
+
+      <!-- الشاشة 1: الكتالوج وملخص السلة -->
       <div class="content-layout view-section" id="explore-view">
         <section id="trip-list"></section>
         <aside class="summary-panel" id="itinerary-summary">
           <h2>Active Itinerary Summary</h2>
 
-          <!-- القائمة التي سنعرض فيها عناصر الرحلات المختارة -->
-          <ul class="selected-trips-list" id="selected-trips-list">
-            <!-- ستتم إضافتها تلقائياً بواسطة JavaScript -->
-          </ul>
+          <ul class="selected-trips-list" id="selected-trips-list"></ul>
 
-          <!-- قسم الحسابات والأسعار -->
           <div class="summary-totals">
             <div class="total-row">
               <span>Subtotal:</span>
@@ -64,9 +68,7 @@
             </div>
             <div class="total-row total-highlight">
               <span>Total:</span>
-              <span class="price-value highlight" id="summary-total"
-                >$0.00</span
-              >
+              <span class="price-value highlight" id="summary-total">$0.00</span>
             </div>
           </div>
           <button id="confirm-booking-btn" class="confirm-btn">
@@ -74,73 +76,38 @@
           </button>
         </aside>
       </div>
-      <!-- الشاشة 2: جدول الحجوزات المؤكدة (تبدأ مخفية) -->
+
+      <!-- الشاشة 2: جدول الحجوزات المؤكدة -->
       <section id="my-bookings-view" class="view-section hidden">
         <div class="panel-card">
           <h2>Confirmed Reservations History</h2>
-          <div id="confirmed-bookings-container" style="margin-top: 16px">
-            <!-- سيتم حقن سجل الحجوزات هنا عبر JS -->
+          <div id="confirmed-bookings-container" class="bookings-history-container">
             <p class="empty-state-text">
-              No confirmed bookings yet. Complete a reservation from Explore
-              Trips.
+              No confirmed bookings yet. Complete a reservation from Explore Trips.
             </p>
           </div>
         </div>
       </section>
-      <!-- الشاشة 3: لوحة الإحصائيات البسيطة (تبدأ مخفية) -->
+
+      <!-- الشاشة 3: لوحة الإحصائيات -->
       <section id="analytics-view" class="view-section hidden">
         <div class="panel-card">
           <h2>Expense & Travel Analytics</h2>
-          <div
-            class="stats-grid"
-            style="
-              display: grid;
-              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-              gap: 16px;
-              margin-top: 16px;
-            "
-          >
-            <div
-              class="stat-box"
-              style="
-                background: #0f172a;
-                padding: 16px;
-                border-radius: 8px;
-                border: 1px solid #334155;
-              "
-            >
-              <p style="color: #94a3b8; font-size: 13px">
-                Total Expeditions Completed
-              </p>
-              <h3
-                id="analytics-trips-count"
-                style="font-size: 24px; color: #34d399; margin-top: 4px"
-              >
-                0
-              </h3>
+          <div class="stats-grid">
+            <div class="stat-box">
+              <p class="stat-label">Total Expeditions Completed</p>
+              <h3 id="analytics-trips-count" class="stat-value">0</h3>
             </div>
-            <div
-              class="stat-box"
-              style="
-                background: #0f172a;
-                padding: 16px;
-                border-radius: 8px;
-                border: 1px solid #334155;
-              "
-            >
-              <p style="color: #94a3b8; font-size: 13px">Total Spending</p>
-              <h3
-                id="analytics-total-spent"
-                style="font-size: 24px; color: #34d399; margin-top: 4px"
-              >
-                $0.00
-              </h3>
+            <div class="stat-box">
+              <p class="stat-label">Total Spending</p>
+              <h3 id="analytics-total-spent" class="stat-value">$0.00</h3>
             </div>
           </div>
         </div>
       </section>
     </main>
-    <!-- نافذة تأكيد الحجز (Modal Overlay) -->
+
+    <!-- نافذة تأكيد الحجز -->
     <div id="booking-modal" class="modal-overlay hidden">
       <div class="modal-card">
         <div class="modal-icon">✓</div>
